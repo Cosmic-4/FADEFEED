@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Reel } from '../lib/reelData';
-import { formatLikes } from '../lib/reelData';
+
+const fmt = (n: number) => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K' : String(n);
 
 interface ReelControlsProps {
   reel: Reel;
@@ -55,7 +56,7 @@ export default function ReelControls({ reel, isMuted, onToggleMute, onLike, isLi
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
             </motion.div>
-            <span className="text-white text-[11px]">{formatLikes(reel.likes + (isLiked ? 1 : 0))}</span>
+            <span className="text-white text-[11px]">{fmt(reel.likes + (isLiked ? 1 : 0))}</span>
           </button>
 
           <button className="flex flex-col items-center gap-1 cursor-pointer bg-transparent border-none">

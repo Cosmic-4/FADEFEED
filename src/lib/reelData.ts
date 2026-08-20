@@ -18,22 +18,6 @@ const BASE_REELS: Reel[] = [
   },
   {
     id: 2,
-    videoUrl: '/videos/326677_medium.mp4',
-    username: '@driftworks',
-    caption: 'Minimal architecture is everything.',
-    likes: 18700,
-    category: 'design',
-  },
-  {
-    id: 3,
-    videoUrl: '/videos/336755_medium.mp4',
-    username: '@nightshift.co',
-    caption: 'The city never sleeps. Neither do we.',
-    likes: 41200,
-    category: 'lifestyle',
-  },
-  {
-    id: 4,
     videoUrl: '/videos/343478_medium.mp4',
     username: '@kinetic.flow',
     caption: 'Movement is medicine.',
@@ -41,7 +25,7 @@ const BASE_REELS: Reel[] = [
     category: 'fitness',
   },
   {
-    id: 5,
+    id: 3,
     videoUrl: '/videos/347325_medium.mp4',
     username: '@sundial.waves',
     caption: 'Found this hidden beach at golden hour.',
@@ -49,7 +33,7 @@ const BASE_REELS: Reel[] = [
     category: 'travel',
   },
   {
-    id: 6,
+    id: 4,
     videoUrl: '/videos/364783_medium.mp4',
     username: '@static.pitch',
     caption: 'New beat. Pure analog warmth.',
@@ -57,7 +41,7 @@ const BASE_REELS: Reel[] = [
     category: 'music',
   },
   {
-    id: 7,
+    id: 5,
     videoUrl: '/videos/367164_medium.mp4',
     username: '@luma.goods',
     caption: 'Handcrafted with intention.',
@@ -65,7 +49,7 @@ const BASE_REELS: Reel[] = [
     category: 'craft',
   },
   {
-    id: 8,
+    id: 6,
     videoUrl: '/videos/367684_medium.mp4',
     username: '@veld.studio',
     caption: 'Into the unknown. Always.',
@@ -73,7 +57,7 @@ const BASE_REELS: Reel[] = [
     category: 'adventure',
   },
   {
-    id: 9,
+    id: 7,
     videoUrl: '/videos/370344_medium.mp4',
     username: '@echo.form',
     caption: 'Sound design session. Late night.',
@@ -81,23 +65,7 @@ const BASE_REELS: Reel[] = [
     category: 'music',
   },
   {
-    id: 10,
-    videoUrl: '/videos/15470651_3840_2160_60fps.mp4',
-    username: '@pulse.collective',
-    caption: '60fps. No filters needed.',
-    likes: 61200,
-    category: 'cinematic',
-  },
-  {
-    id: 11,
-    videoUrl: '/videos/16425247_3840_2160_30fps.mp4',
-    username: '@frameby.frame',
-    caption: 'Every frame a painting.',
-    likes: 44800,
-    category: 'cinematic',
-  },
-  {
-    id: 12,
+    id: 8,
     videoUrl: '/videos/16575361_2160_3840_30fps.mp4',
     username: '@vertical.arts',
     caption: 'Portrait mode. Full send.',
@@ -105,7 +73,7 @@ const BASE_REELS: Reel[] = [
     category: 'portrait',
   },
   {
-    id: 13,
+    id: 9,
     videoUrl: '/videos/16602269_2160_3840_30fps.mp4',
     username: '@raw.lens',
     caption: 'No edits. Just light.',
@@ -124,12 +92,13 @@ function shuffleArray<T>(arr: T[]): T[] {
 }
 
 export function generateFeedOrder(cycle: number): Reel[] {
-  if (cycle === 0) return [...BASE_REELS];
   const shuffled = shuffleArray(BASE_REELS);
-  return cycle % 2 === 0 ? shuffled : [...shuffled].reverse();
+  const first3 = shuffled.slice(0, 3);
+  const rest = shuffled.slice(3);
+  if (cycle === 0) return [...first3, ...rest, ...rest, ...rest];
+  const reshuffled = shuffleArray(BASE_REELS);
+  const newFirst3 = reshuffled.slice(0, 3);
+  const newRest = reshuffled.slice(3);
+  return [...newFirst3, ...newRest, ...newRest, ...newRest];
 }
 
-export function formatLikes(n: number): string {
-  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-  return n.toString();
-}
